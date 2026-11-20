@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sniffle | The Rotating Treat-Puzzle Box for Dogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="Sniffle home">Sniffle</a>
+      <nav class="nav-links">
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#order">Order now</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="badge">New — Interactive Dog Puzzle</span>
+        <h1>Sniffle keeps your dog busy.<br>You keep your peace.</h1>
+        <p>The rotating treat-puzzle box that challenges your pup's nose and brain while dispensing rewards, one spin at a time.</p>
+        <div class="hero-actions">
+          <a href="#order" class="btn btn-primary">Order Sniffle — $49</a>
+          <a href="#how-it-works" class="btn btn-outline">See how it works</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="puzzle-stage">
+          <div class="puzzle-box" id="puzzle-box">
+            <div class="face face-top"></div>
+            <div class="face face-bottom"></div>
+            <div class="face face-left"></div>
+            <div class="face face-right"></div>
+            <div class="face face-front"></div>
+            <div class="face face-back"></div>
+            <div class="treat" id="treat-1"></div>
+            <div class="treat" id="treat-2"></div>
+            <div class="treat" id="treat-3"></div>
+            <div class="treat" id="treat-4"></div>
+            <div class="knob" id="knob"></div>
+            <div class="spin-hint">Spin to release treats</div>
+          </div>
+          <p class="stage-caption">Interactive rotating puzzle — spin the knob to dispense treats</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <ol class="steps">
+        <li>
+          <div class="step-number">1</div>
+          <h3>Load the treats</h3>
+          <p>Fill the inner chamber with your dog's favorite kibble or soft treats.</p>
+        </li>
+        <li>
+          <div class="step-number">2</div>
+          <h3>Give it a spin</h3>
+          <p>Your dog nudges the rotating knob, turning the internal maze.</p>
+        </li>
+        <li>
+          <div class="step-number">3</div>
+          <h3>Treat released</h3>
+          <p>Each rotation drops a treat through the puzzle slot — rewarding effort and curiosity.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why dogs love Sniffle</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#128054;</div>
+          <h3>Mental stimulation</h3>
+          <p>Rotating puzzle challenges keep boredom and destructive chewing at bay.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127867;</div>
+          <h3>Slow feeding</h3>
+          <p>Treats dispense one at a time, slowing fast eaters for better digestion.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128293;</div>
+          <h3>Easy to clean</h3>
+          <p>Twist-open chamber and dishwasher-safe parts make cleanup a breeze.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128294;</div>
+          <h3>Tough build</h3>
+          <p>Chew-resistant, BPA-free plastic built for enthusiastic paws and snouts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="order" id="order">
+    <div class="container order-inner">
+      <div class="order-copy">
+        <h2 class="section-title">Order your Sniffle</h2>
+        <p>Ready to keep your pup busy? Grab a Sniffle today.</p>
+        <div class="price">$49 <span class="price-note">free shipping</span></div>
+      </div>
+      <form id="order-form" class="order-form" novalidate>
+        <div class="form-group">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" required placeholder="Alex">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="alex@example.com">
+        </div>
+        <div class="form-group">
+          <label for="address">Shipping address</label>
+          <input type="text" id="address" name="address" required placeholder="123 Bark Lane">
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <select id="quantity" name="quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="order-submit">Place order</button>
+        <div id="order-message" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">Sniffle</div>
+      <p class="footer-copy">Interactive rotating treat-puzzle boxes for dogs.</p>
+      <div class="footer-nav">
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#order">Order now</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
