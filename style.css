@@ -164,36 +164,36 @@ img, svg { max-width: 100%; display: block; }
   width: min(320px, 85vw);
   height: min(320px, 85vw);
   border-radius: 50%;
-  border: var(--stroke) solid var(--ink);
+  border: 6px solid var(--ink);
   background: var(--white);
-  box-shadow: var(--shadow), 0 0 0 12px var(--white);
+  box-shadow: var(--shadow), 0 0 0 14px var(--white), 0 0 0 16px var(--coral);
   cursor: pointer;
 }
 .outer-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: var(--stroke) solid var(--ink);
+  border: 4px solid var(--ink);
   background: conic-gradient(
-    var(--yellow) 0deg 60deg,
-    var(--sky-blue) 60deg 120deg,
-    var(--green) 120deg 180deg,
-    var(--coral) 180deg 240deg,
-    #F4D03F 240deg 300deg,
-    var(--sky-blue) 300deg 360deg
+    #FFD700 0deg 60deg,
+    #00E5FF 60deg 120deg,
+    #00F260 120deg 180deg,
+    #FF4D6D 180deg 240deg,
+    #FFA500 240deg 300deg,
+    #8A2BE2 300deg 360deg
   );
-  mask: radial-gradient(circle at center, transparent 76%, black 80%);
-  -webkit-mask: radial-gradient(circle at center, transparent 76%, black 80%);
+  mask: radial-gradient(circle at center, transparent 74%, black 78%);
+  -webkit-mask: radial-gradient(circle at center, transparent 74%, black 78%);
 }
 .hub {
   position: absolute;
   top: 50%; left: 50%;
-  width: 52px; height: 52px;
+  width: 56px; height: 56px;
   background: var(--ink);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  border: var(--stroke) solid var(--white);
+  border: 5px solid var(--white);
   box-shadow: var(--shadow);
 }
 .inner-ring {
@@ -206,47 +206,49 @@ img, svg { max-width: 100%; display: block; }
 .pocket {
   position: absolute;
   top: 50%; left: 50%;
-  width: 84px; height: 84px;
-  background: rgba(255,255,255,0.9);
-  border: var(--stroke) solid var(--ink);
+  width: 72px; height: 72px;
+  background: rgba(255,255,255,0.92);
+  border: 4px solid var(--ink);
   border-radius: 50%;
   transform-origin: 50% 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   z-index: 2;
   opacity: 0.6;
-  box-shadow: inset 0 0 0 5px var(--white), var(--shadow);
+  box-shadow: inset 0 0 0 6px var(--white), var(--shadow);
 }
 .treat-emoji {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0.4);
   transition: opacity 0.3s, transform 0.3s;
 }
 .pocket.revealed .treat-emoji {
   opacity: 1;
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
-#pocket-0 { transform: rotate(0deg) translateX(118px) rotate(0deg); }
-#pocket-1 { transform: rotate(60deg) translateX(118px) rotate(-60deg); }
-#pocket-2 { transform: rotate(120deg) translateX(118px) rotate(-120deg); }
-#pocket-3 { transform: rotate(180deg) translateX(118px) rotate(-180deg); }
-#pocket-4 { transform: rotate(240deg) translateX(118px) rotate(-240deg); }
-#pocket-5 { transform: rotate(300deg) translateX(118px) rotate(-300deg); }
+#pocket-0 { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+#pocket-1 { transform: rotate(60deg) translateX(100px) rotate(-60deg); }
+#pocket-2 { transform: rotate(120deg) translateX(100px) rotate(-120deg); }
+#pocket-3 { transform: rotate(180deg) translateX(100px) rotate(-180deg); }
+#pocket-4 { transform: rotate(240deg) translateX(100px) rotate(-240deg); }
+#pocket-5 { transform: rotate(300deg) translateX(100px) rotate(-300deg); }
 .pointer {
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%, -124%);
-  font-size: 2.2rem;
+  transform: translate(-50%, -128%);
+  font-size: 2.6rem;
   z-index: 5;
   filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.15));
   user-select: none;
 }
 .wheel-hint {
-  margin-top: 1.2rem;
+  margin-top: 1.8rem;
   font-family: 'Puffy';
   font-weight: 700;
-  color: var(--ink-soft);
-  font-size: 1rem;
+  color: var(--ink);
+  font-size: 1.7rem;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 
 /* Hero dogs */
