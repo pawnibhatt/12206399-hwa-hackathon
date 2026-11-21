@@ -23,6 +23,10 @@ body {
   font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   color: var(--ink);
   background: var(--cream);
+  background-image: linear-gradient(rgba(255, 253, 245, 0.82), rgba(255, 253, 245, 0.82)), url('images/daniel-alvasd-qSeQrbfLwrU-unsplash.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   line-height: 1.55;
   overflow-x: hidden;
 }
@@ -161,6 +165,15 @@ img, svg { max-width: 100%; display: block; }
   height: min(320px, 85vw);
   border-radius: 50%;
   border: var(--stroke) solid var(--ink);
+  background: var(--white);
+  box-shadow: var(--shadow), 0 0 0 12px var(--white);
+  cursor: pointer;
+}
+.outer-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: var(--stroke) solid var(--ink);
   background: conic-gradient(
     var(--yellow) 0deg 60deg,
     var(--sky-blue) 60deg 120deg,
@@ -169,14 +182,9 @@ img, svg { max-width: 100%; display: block; }
     #F4D03F 240deg 300deg,
     var(--sky-blue) 300deg 360deg
   );
-  box-shadow: var(--shadow), 0 0 0 12px var(--white);
-  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
-  transform-style: preserve-3d;
+  mask: radial-gradient(circle at center, transparent 76%, black 80%);
+  -webkit-mask: radial-gradient(circle at center, transparent 76%, black 80%);
 }
-.wheel.spinning { transition: none; }
-.wheel:active { cursor: grabbing; }
-.wheel:hover { cursor: pointer; filter: saturate(1.15); }
-
 .hub {
   position: absolute;
   top: 50%; left: 50%;
@@ -188,8 +196,14 @@ img, svg { max-width: 100%; display: block; }
   border: var(--stroke) solid var(--white);
   box-shadow: var(--shadow);
 }
-
-.compartment {
+.inner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.pocket {
   position: absolute;
   top: 50%; left: 50%;
   width: 84px; height: 84px;
@@ -201,29 +215,23 @@ img, svg { max-width: 100%; display: block; }
   font-size: 1.8rem;
   z-index: 2;
   opacity: 0.6;
-  transition: transform 0.3s, opacity 0.3s, filter 0.3s;
   box-shadow: inset 0 0 0 5px var(--white), var(--shadow);
 }
-.compartment.revealed {
+.treat-emoji {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.pocket.revealed .treat-emoji {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.2);
-  z-index: 4;
-  border-color: var(--coral-dark);
-  background: #FFF;
-  animation: popTreat 0.55s;
+  transform: scale(1.2);
 }
-@keyframes popTreat {
-  0% { transform: translate(-50%, -50%) scale(0.5); }
-  70% { transform: translate(-50%, -50%) scale(1.25); }
-  100% { transform: translate(-50%, -50%) scale(1.2); }
-}
-#comp-0 { transform: translate(-50%, -50%) rotate(0deg) translateX(132px) rotate(-0deg); }
-#comp-1 { transform: translate(-50%, -50%) rotate(60deg) translateX(132px) rotate(-60deg); }
-#comp-2 { transform: translate(-50%, -50%) rotate(120deg) translateX(132px) rotate(-120deg); }
-#comp-3 { transform: translate(-50%, -50%) rotate(180deg) translateX(132px) rotate(-180deg); }
-#comp-4 { transform: translate(-50%, -50%) rotate(240deg) translateX(132px) rotate(-240deg); }
-#comp-5 { transform: translate(-50%, -50%) rotate(300deg) translateX(132px) rotate(-300deg); }
-
+#pocket-0 { transform: rotate(0deg) translateX(118px) rotate(0deg); }
+#pocket-1 { transform: rotate(60deg) translateX(118px) rotate(-60deg); }
+#pocket-2 { transform: rotate(120deg) translateX(118px) rotate(-120deg); }
+#pocket-3 { transform: rotate(180deg) translateX(118px) rotate(-180deg); }
+#pocket-4 { transform: rotate(240deg) translateX(118px) rotate(-240deg); }
+#pocket-5 { transform: rotate(300deg) translateX(118px) rotate(-300deg); }
 .pointer {
   position: absolute;
   top: 50%; left: 50%;
@@ -274,36 +282,6 @@ img, svg { max-width: 100%; display: block; }
   margin-top: 0.5rem;
   text-align: center;
 }
-.dog-eyes {
-  position: absolute;
-  pointer-events: none;
-  z-index: 5;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-.eye {
-  position: absolute;
-  top: 42%;
-  width: 22px;
-  height: 22px;
-  background: var(--white);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: var(--shadow);
-}
-.eye.left { left: 30%; transform: translateX(-50%); }
-.eye.right { right: 30%; transform: translateX(50%); }
-.pupil {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 10px;
-  height: 10px;
-  background: var(--ink);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s linear;
-}
 @keyframes waggle {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(-4deg); }
@@ -336,44 +314,12 @@ img, svg { max-width: 100%; display: block; }
   background: var(--white);
   animation: waggle 3s ease-in-out infinite;
 }
-.dog-tracker .dog-eyes {
-  position: absolute;
-  pointer-events: none;
-  z-index: 5;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-.dog-tracker .eye {
-  position: absolute;
-  top: 42%;
-  width: 22px;
-  height: 22px;
-  background: var(--white);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: var(--shadow);
-}
-.dog-tracker .eye.left { left: 30%; transform: translateX(-50%); }
-.dog-tracker .eye.right { right: 30%; transform: translateX(50%); }
-.dog-tracker .pupil {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 10px;
-  height: 10px;
-  background: var(--ink);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s linear;
-}
-.dog-tracker.locked .pupil { transition: none; }
 
 /* Remove old SVG puppy & scent lines */
 @media (max-width: 768px) {
   .hero-dogs { gap: 1rem; }
   .dog-wrap, .dog-tracker { max-width: 120px; }
   .dog-wrap .dog-img, .dog-tracker .dog-img { width: 120px; height: 120px; }
-  .dog-eyes, .dog-tracker .dog-eyes { width: 120px; height: 120px; }
   .product-action { gap: 1.5rem; flex-direction: column; align-items: center; }
   .product-action .dog-tracker { max-width: 120px; }
 }
