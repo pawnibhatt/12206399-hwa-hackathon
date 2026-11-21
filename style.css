@@ -185,17 +185,6 @@ img, svg { max-width: 100%; display: block; }
   mask: radial-gradient(circle at center, transparent 74%, black 78%);
   -webkit-mask: radial-gradient(circle at center, transparent 74%, black 78%);
 }
-.hub {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 56px; height: 56px;
-  background: var(--ink);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  border: 5px solid var(--white);
-  box-shadow: var(--shadow);
-}
 .inner-ring {
   position: absolute;
   inset: 0;
@@ -207,7 +196,6 @@ img, svg { max-width: 100%; display: block; }
   position: absolute;
   top: 50%; left: 50%;
   width: 72px; height: 72px;
-  background: rgba(255,255,255,0.92);
   border: 4px solid var(--ink);
   border-radius: 50%;
   transform-origin: 50% 50%;
@@ -217,6 +205,12 @@ img, svg { max-width: 100%; display: block; }
   opacity: 0.6;
   box-shadow: inset 0 0 0 6px var(--white), var(--shadow);
 }
+.pocket:nth-child(1) { background: #FF4D6D; } /* red */
+.pocket:nth-child(2) { background: #FFD700; } /* yellow */
+.pocket:nth-child(3) { background: #00E5FF; } /* blue */
+.pocket:nth-child(4) { background: #00F260; } /* green */
+.pocket:nth-child(5) { background: #FF69B4; } /* pink */
+.pocket:nth-child(6) { background: #8A2BE2; } /* purple */
 .treat-emoji {
   opacity: 0;
   transform: scale(0.4);
