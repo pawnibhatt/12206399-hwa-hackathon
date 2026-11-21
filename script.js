@@ -1,95 +1,92 @@
-const puzzleBox = document.getElementById('puzzle-box');
-const knob = document.getElementById('knob');
-const treats = document.querySelectorAll('.treat');
-const orderForm = document.getElementById('order-form');
-const orderSubmit = document.getElementById('order-submit');
-const orderMessage = document.getElementById('order-message');
+const wheel = document.getElementById('wheel');
+const compartments = document.querySelectorAll('.compartment');
+const pointer = document.getElementById('pointer');
+const puppies = document.querySelectorAll('.svg-pup');
 
-let rotationY = 0;
-let rotationX = 0;
+// ---------- Rotating compartment wheel ----------
+let currentRotation = 0;
+let spinning = false;
 
-// Rotate puzzle when knob is clicked or dragged
-knob.addEventListener('pointerdown', (e) => {
-  if (e.pointerType !== 'mouse' && e.pointerType !== 'touch') return;
-  knob.setPointerCapture(e.pointerId);
-  const startX = e.clientX;
-  const startY = e.clientY;
-  const startRotY = rotationY;
-  const startRotX = rotationX;
+function revealCompartmentAtTop() {
+  const index = ((Math.round(currentRotation / 60) % 6) + 6) % 6;
 
-  const onMove = (ev) => {
-    const dx = ev.clientX - startX;
-    const dy = ev.clientY - startY;
-    rotationY = startRotY + dx * 0.5;
-    rotationX = startRotX - dy * 0.5;
-    applyTransform();
-    showRandomTreat();
-  };
+  compartments.forEach((c, i) => {
+    c.classList.toggle('revealed', i === index);
+  });
+}
 
-  const onUp = () => {
-    document.removeEventListener('pointermove', onMove);
-    document.removeEventListener('pointerup', onUp);
-    document.removeEventListener('pointercancel', onUp);
-  };
+wheel.addEventListener('click', () => {
+  if (spinning) return;
+  spinning = true;
+  currentRotation += 60;
+  wheel.classList.add('spinning');
+  wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-  document.addEventListener('pointermove', onMove);
-  document.addEventListener('pointerup', onUp);
-  document.addEventListener('pointercancel', onUp);
+  setTimeout(() => {
+    revealCompartmentAtTop();
+    wheel.classList.remove('spinning');
+    spinning = false;
+  }, 650);
 });
 
-function applyTransform() {
-  puzzleBox.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
-}
+// ---------- Puppies bounce + tail wag ----------
+puppies.forEach((pup) => {
+  const svg = pup.querySelector('svg');
+  const tail = pup.querySelector('path[id^="tail"]');
+  let wagFrame = null;
 
-function showRandomTreat() {
-  treats.forEach((t) => t.classList.remove('shown'));
-  const t = treats[Math.floor(Math.random() * treats.length)];
-  t.classList.add('shown');
-  setTimeout(() => t.classList.remove('shown'), 700);
-}
-
-// Auto-rotate slightly for visual appeal
-let autoAngle = 0;
-function autoRotate() {
-  autoAngle += 0.15;
-  rotationY = Math.sin(autoAngle * 0.5) * 8;
-  rotationX = Math.cos(autoAngle * 0.3) * 4;
-  applyTransform();
-  requestAnimationFrame(autoRotate);
-}
-autoRotate();
-
-// Order form submission
-orderForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  orderSubmit.disabled = true;
-  orderSubmit.textContent = 'Placing order…';
-  orderMessage.textContent = '';
-
-  const formData = new FormData(orderForm);
-  const payload = Object.fromEntries(formData.entries());
-
-  try {
-    const res = await fetch('/api/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    const result = await res.json();
-
-    if (res.ok) {
-      orderMessage.style.color = '#15803d';
-      orderMessage.textContent = result.message || 'Order placed!';
-      orderForm.reset();
-    } else {
-      orderMessage.style.color = '#b91c1c';
-      orderMessage.textContent = result.error || 'Order failed. Try again.';
-    }
-  } catch (err) {
-    orderMessage.style.color = '#b91c1c';
-    orderMessage.textContent = 'Unable to reach the server. Try again later.';
-  } finally {
-    orderSubmit.disabled = false;
-    orderSubmit.textContent = 'Place order';
+  function wagTail() {
+    let angle = 0;
+    let dir = 1;
+    const step = () => {
+      angle += dir * 12;
+      if (angle >= 24 || angle <= -24) dir *= -1;
+      tail.setAttribute('transform', `rotate(${angle} 88 44)`);
+      wagFrame = requestAnimationFrame(step);
+    };
+    step();
   }
+
+  function stopWag() {
+    cancelAnimationFrame(wagFrame);
+    tail.removeAttribute('transform');
+  }
+
+  pup.addEventListener('click', (e) => {
+    e.stopPropagation();
+    pup.classList.add('bouncing');
+    wagTail();
+
+    setTimeout(() => {
+      pup.classList.remove('bouncing');
+    }, 550);
+
+    setTimeout(stopWag, 1400);
+  });
 });
+
+// ---------- Celebration popup ----------
+const overlay = document.getElementById('overlay');
+const popup = document.getElementById('popup');
+const closeBtn = document.querySelector('.popup-close');
+const shopButtons = document.querySelectorAll('.btn-shop, #shop-product');
+
+function openPopup() {
+  overlay.style.display = 'block';
+  popup.style.display = 'block';
+}
+
+function closePopup() {
+  overlay.style.display = 'none';
+  popup.style.display = 'none';
+}
+
+shopButtons.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openPopup();
+  });
+});
+
+closeBtn.addEventListener('click', closePopup);
+overlay.addEventListener('click', closePopup);

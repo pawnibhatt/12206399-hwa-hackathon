@@ -3,154 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sniffle | The Rotating Treat-Puzzle Box for Dogs</title>
+  <title>Sniffle | Rotating Treat-Puzzle Box for Dogs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Puffy:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="logo" aria-label="Sniffle home">Sniffle</a>
-      <nav class="nav-links">
-        <a href="#how-it-works">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#order">Order now</a>
-      </nav>
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand" aria-label="Sniffle home">
+        <svg class="paw-logo" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#2D3436" d="M34 8a4 4 0 0 1 4 4v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4v-4a4 4 0 0 1 4-4zM14 8a4 4 0 0 1 4 4v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4v-4a4 4 0 0 1 4-4zM24 22c-4.4 0-8 3.6-8 8v2c0 4.4 3.6 8 8 8s8-3.6 8-8v-2c0-4.4-3.6-8-8-8z"/>
+          <circle cx="24" cy="16" r="6" fill="#2D3436"/>
+        </svg>
+        <span class="brand-text">Sniffle</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#love-it">Why owners love it</a></li>
+        <li><a href="#product">Product</a></li>
+      </ul>
+      <a href="#product" class="btn-shop nav-shop">Shop now</a>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
     </div>
-  </header>
+  </nav>
 
   <section class="hero" id="hero">
     <div class="container hero-inner">
       <div class="hero-copy">
-        <span class="badge">Sniff It. Spin It. Munch It.</span>
-        <h1>Sniffle keeps your dog busy.<br>You keep your peace.</h1>
-        <p>The rotating treat-puzzle box that challenges your pup's nose and brain while dispensing rewards, one spin at a time.</p>
-        <div class="hero-actions">
-          <a href="#order" class="btn btn-primary">Order Sniffle — $49</a>
-          <a href="#how-it-works" class="btn btn-outline">See how it works</a>
-        </div>
+        <span class="chip">New!</span>
+        <h1>Keep your dog happily busy<br>while you're away.</h1>
+        <p class="lead">Sniffle is the rotating treat-puzzle box that turns alone time into playtime. Sniff, spin, snack, repeat!</p>
+        <a href="#product" class="btn btn-primary btn-lg">Shop now</a>
       </div>
-      <div class="hero-visual">
-        <div class="puzzle-stage">
-          <div class="puzzle-box" id="puzzle-box">
-            <div class="face face-top"></div>
-            <div class="face face-bottom"></div>
-            <div class="face face-left"></div>
-            <div class="face face-right"></div>
-            <div class="face face-front"></div>
-            <div class="face face-back"></div>
-            <div class="treat" id="treat-1"></div>
-            <div class="treat" id="treat-2"></div>
-            <div class="treat" id="treat-3"></div>
-            <div class="treat" id="treat-4"></div>
-            <div class="knob" id="knob"></div>
-            <div class="spin-hint">Spin to release treats</div>
+      <div class="hero-wheel-wrap">
+        <div class="wheel-stage">
+          <div class="wheel" id="wheel">
+            <div class="hub"></div>
+            <div class="compartment" id="comp-0" data-angle="0" data-treat="🦴"></div>
+            <div class="compartment" id="comp-1" data-angle="60" data-treat="🥕"></div>
+            <div class="compartment" id="comp-2" data-angle="120" data-treat="🍪"></div>
+            <div class="compartment" id="comp-3" data-angle="180" data-treat="🍌"></div>
+            <div class="compartment" id="comp-4" data-angle="240" data-treat="🍓"></div>
+            <div class="compartment" id="comp-5" data-angle="300" data-treat="🍎"></div>
+            <div class="pointer" id="pointer">🐾</div>
           </div>
-          <p class="stage-caption">Interactive rotating puzzle — spin the knob to dispense treats</p>
+          <p class="wheel-hint">Tap a compartment to spin & reveal a treat!</p>
+        </div>
+      </div>
+      <div class="puppies">
+        <div class="puppy svg-pup" id="pup-left" data-bounce="left">
+          <svg viewBox="0 0 120 120" class="pup-svg">
+            <defs>
+              <filter id="puppy-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+            <!-- body -->
+            <ellipse cx="60" cy="62" rx="22" ry="16" fill="#FED766" filter="url(#puppy-shadow)"/>
+            <!-- head -->
+            <circle cx="60" cy="44" r="18" fill="#FED766" filter="url(#puppy-shadow)"/>
+            <!-- ears -->
+            <ellipse cx="46" cy="34" rx="7" ry="11" fill="#E8833A" transform="rotate(-20 46 34)"/>
+            <ellipse cx="74" cy="34" rx="7" ry="11" fill="#E8833A" transform="rotate(20 74 34)"/>
+            <!-- eyes -->
+            <circle cx="53" cy="40" r="2.5" fill="#2D3436"/>
+            <circle cx="67" cy="40" r="2.5" fill="#2D3436"/>
+            <!-- muzzle -->
+            <ellipse cx="60" cy="48" rx="6" ry="4" fill="#FFF5E6"/>
+            <circle cx="60" cy="50" r="2" fill="#2D3436"/>
+            <!-- legs -->
+            <rect x="50" y="74" rx="3" width="6" height="10" fill="#FED766"/>
+            <rect x="64" y="74" rx="3" width="6" height="10" fill="#FED766"/>
+            <!-- tail wagging -->
+            <path id="tail-left" d="M80 56 Q92 52 88 44" stroke="#FED766" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="puppy svg-pup" id="pup-right" data-bounce="right">
+          <svg viewBox="0 0 120 120" class="pup-svg">
+            <defs>
+              <filter id="puppy-shadow-r" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+            <!-- body -->
+            <ellipse cx="60" cy="62" rx="22" ry="16" fill="#5DADE2" filter="url(#puppy-shadow-r)"/>
+            <!-- head -->
+            <circle cx="60" cy="44" r="18" fill="#5DADE2" filter="url(#puppy-shadow-r)"/>
+            <!-- ears -->
+            <ellipse cx="46" cy="34" rx="7" ry="11" fill="#2E86C1" transform="rotate(-20 46 34)"/>
+            <ellipse cx="74" cy="34" rx="7" ry="11" fill="#2E86C1" transform="rotate(20 74 34)"/>
+            <!-- eyes -->
+            <circle cx="53" cy="40" r="2.5" fill="#2D3436"/>
+            <circle cx="67" cy="40" r="2.5" fill="#2D3436"/>
+            <!-- muzzle -->
+            <ellipse cx="60" cy="48" rx="6" ry="4" fill="#FFF5E6"/>
+            <circle cx="60" cy="50" r="2" fill="#2D3436"/>
+            <!-- legs -->
+            <rect x="50" y="74" rx="3" width="6" height="10" fill="#5DADE2"/>
+            <rect x="64" y="74" rx="3" width="6" height="10" fill="#5DADE2"/>
+            <!-- tail wagging -->
+            <path id="tail-right" d="M80 56 Q92 52 88 44" stroke="#5DADE2" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="puppy svg-pup" id="pup-bottom" data-bounce="bottom">
+          <svg viewBox="0 0 120 120" class="pup-svg">
+            <defs>
+              <filter id="puppy-shadow-b" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+            <!-- body -->
+            <ellipse cx="60" cy="62" rx="22" ry="16" fill="#2ECC71" filter="url(#puppy-shadow-b)"/>
+            <!-- head -->
+            <circle cx="60" cy="44" r="18" fill="#2ECC71" filter="url(#puppy-shadow-b)"/>
+            <!-- ears -->
+            <ellipse cx="46" cy="34" rx="7" ry="11" fill="#27AE60" transform="rotate(-20 46 34)"/>
+            <ellipse cx="74" cy="34" rx="7" ry="11" fill="#27AE60" transform="rotate(20 74 34)"/>
+            <!-- eyes -->
+            <circle cx="53" cy="40" r="2.5" fill="#2D3436"/>
+            <circle cx="67" cy="40" r="2.5" fill="#2D3436"/>
+            <!-- muzzle -->
+            <ellipse cx="60" cy="48" rx="6" ry="4" fill="#FFF5E6"/>
+            <circle cx="60" cy="50" r="2" fill="#2D3436"/>
+            <!-- legs -->
+            <rect x="50" y="74" rx="3" width="6" height="10" fill="#2ECC71"/>
+            <rect x="64" y="74" rx="3" width="6" height="10" fill="#2ECC71"/>
+            <!-- tail wagging -->
+            <path id="tail-bottom" d="M80 56 Q92 52 88 44" stroke="#2ECC71" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="how-it-works" id="how-it-works">
+  <section class="how-it" id="how-it-works">
     <div class="container">
-      <h2 class="section-title">How it works</h2>
-      <ol class="steps">
-        <li>
-          <div class="step-number">1</div>
-          <h3>Load the treats</h3>
-          <p>Fill the inner chamber with your dog's favorite kibble or soft treats.</p>
-        </li>
-        <li>
-          <div class="step-number">2</div>
-          <h3>Give it a spin</h3>
-          <p>Your dog nudges the rotating knob, turning the internal maze.</p>
-        </li>
-        <li>
-          <div class="step-number">3</div>
-          <h3>Treat released</h3>
-          <p>Each rotation drops a treat through the puzzle slot — rewarding effort and curiosity.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="features" id="features">
-    <div class="container">
-      <h2 class="section-title">Why dogs love Sniffle</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">&#128054;</div>
-          <h3>Mental stimulation</h3>
-          <p>Rotating puzzle challenges keep boredom and destructive chewing at bay.</p>
+      <h2 class="section-title">How Sniffle works</h2>
+      <p class="section-sub">Three simple steps to a happily busy pup.</p>
+      <div class="steps-grid">
+        <div class="step-card" id="step-1">
+          <div class="step-badge">1</div>
+          <div class="step-icon">🍖</div>
+          <h3>Hide treats inside</h3>
+          <p>Pop your dog&rsquo;s favorite treats into the six rotating compartments and snap the lid shut.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#127867;</div>
-          <h3>Slow feeding</h3>
-          <p>Treats dispense one at a time, slowing fast eaters for better digestion.</p>
+        <div class="step-card" id="step-2">
+          <div class="step-badge">2</div>
+          <div class="step-icon">👃</div>
+          <h3>Dog sniffs the scent</h3>
+          <p>Treat smells drift through the slots, getting curious noses twitching and tails wagging.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128293;</div>
-          <h3>Easy to clean</h3>
-          <p>Twist-open chamber and dishwasher-safe parts make cleanup a breeze.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128294;</div>
-          <h3>Tough build</h3>
-          <p>Chew-resistant, BPA-free plastic built for enthusiastic paws and snouts.</p>
+        <div class="step-card" id="step-3">
+          <div class="step-badge">3</div>
+          <div class="step-icon">🐾</div>
+          <h3>Rotate &amp; eat</h3>
+          <p>Paws, noses, and tongues spin the compartments until a treat drops out &mdash; yum!</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="order" id="order">
-    <div class="container order-inner">
-      <div class="order-copy">
-        <h2 class="section-title">Order your Sniffle</h2>
-        <p>Ready to keep your pup busy? Grab a Sniffle today.</p>
-        <div class="price">$49 <span class="price-note">free shipping</span></div>
+  <section class="love-it" id="love-it">
+    <div class="container love-inner">
+      <div class="love-copy">
+        <h2 class="section-title">Why owners love Sniffle</h2>
+        <p class="lead">Peace of mind knowing your dog is mentally stimulated and happily busy instead of bored.</p>
+        <ul class="love-list">
+          <li><span class="tick">&#10003;</span> Keeps boredom and chewing at bay</li>
+          <li><span class="tick">&#10003;</span> Slow-feeds fast eaters, one treat at a time</li>
+          <li><span class="tick">&#10003;</span> Easy-open, dishwasher-safe compartments</li>
+          <li><span class="tick">&#10003;</span> Tough, chew-resistant, puppy-approved build</li>
+        </ul>
       </div>
-      <form id="order-form" class="order-form" novalidate>
-        <div class="form-group">
-          <label for="name">Your name</label>
-          <input type="text" id="name" name="name" required placeholder="Alex">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="alex@example.com">
-        </div>
-        <div class="form-group">
-          <label for="address">Shipping address</label>
-          <input type="text" id="address" name="address" required placeholder="123 Bark Lane">
-        </div>
-        <div class="form-group">
-          <label for="quantity">Quantity</label>
-          <select id="quantity" name="quantity">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full" id="order-submit">Place order</button>
-        <div id="order-message" role="status" aria-live="polite"></div>
-      </form>
+      <div class="love-visual">
+        <div class="happy-badge">&#128054; Happily busy pup!</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product" id="product">
+    <div class="container product-inner">
+      <div class="product-banner">
+        <span class="banner-tag">&#127881;</span>
+        <strong>FREE 150g Treat Pack included with every Sniffle Box!</strong>
+      </div>
+      <div class="product-copy">
+        <h2 class="section-title">Meet the Sniffle Box</h2>
+        <p class="lead">Six rotating compartments, endless snack spins. Bright, chunky, and built for happy paws.</p>
+      </div>
+      <div class="product-action">
+        <button class="btn btn-primary btn-lg btn-shop-product" id="shop-product">Shop now</button>
+      </div>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="footer-brand">Sniffle</div>
-      <p class="footer-copy">Interactive rotating treat-puzzle boxes for dogs.</p>
-      <div class="footer-nav">
-        <a href="#how-it-works">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#order">Order now</a>
+      <div class="footer-brand">
+        <svg class="paw-logo" viewBox="0 0 32 32" aria-hidden="true">
+          <path fill="#2D3436" d="M23 6a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-3a3 3 0 0 1-3-3v-3a3 3 0 0 1 3-3zM9 6a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-3a3 3 0 0 1-3-3v-3a3 3 0 0 1 3-3zM16 15c-3 0-5 2.4-5 5v1c0 3 2.4 5 5 5s5-2.4 5-5v-1c0-2.6-2-5-5-5z"/>
+          <circle cx="16" cy="11" r="4" fill="#2D3436"/>
+        </svg>
+        <span>Sniffle</span>
       </div>
+      <p class="footer-note">Thank you for being a part of the Sniffle Pack!</p>
     </div>
   </footer>
+
+  <!-- Celebration popup -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+  <div class="popup" id="popup" role="dialog" aria-modal="true" aria-label="Coming Soon">
+    <div class="popup-body">
+      <div class="popup-icon">&#127881;</div>
+      <h2 class="popup-title">Coming Soon!</h2>
+      <p class="popup-text">The Sniffle shop is warming up. We can&rsquo;t wait to ship your pup a box!</p>
+      <button class="btn btn-secondary popup-close">Got it</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
