@@ -1,9 +1,6 @@
 const wheel = document.getElementById('wheel');
 const compartments = document.querySelectorAll('.compartment');
-const pointer = document.getElementById('pointer');
-const puppies = document.querySelectorAll('.svg-pup');
-const heroPuppy = document.querySelector('.puppy-hero');
-const heroTail = document.getElementById('hero-tail');
+const shopButtons = document.querySelectorAll('.btn-shop, #shop-product');
 
 // ---------- Rotating compartment wheel ----------
 let currentRotation = 0;
@@ -30,92 +27,54 @@ wheel.addEventListener('click', () => {
   }, 650);
 });
 
-// ---------- Puppies bounce + tail wag ----------
-puppies.forEach((pup) => {
-  const svg = pup.querySelector('svg');
-  const tail = pup.querySelector('path[id^="tail"]');
-  let wagFrame = null;
+// ---------- Eye-tracking dogs next to Shop Now ----------
+const trackers = document.querySelectorAll('.dog-tracker');
+const pupils = document.querySelectorAll('.dog-tracker .pupil');
+const shopBtn = document.getElementById('shop-product');
+let locked = false;
 
-  function wagTail() {
-    let angle = 0;
-    let dir = 1;
-    const step = () => {
-      angle += dir * 14;
-      if (angle >= 26 || angle <= -26) dir *= -1;
-      tail.setAttribute('transform', `rotate(${angle} 88 44)`);
-      wagFrame = requestAnimationFrame(step);
-    };
-    step();
-  }
+function getEyeCenter(eye) {
+  const rect = eye.getBoundingClientRect();
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+}
 
-  function stopWag() {
-    cancelAnimationFrame(wagFrame);
-    tail.removeAttribute('transform');
-  }
-
-  pup.addEventListener('click', (e) => {
-    e.stopPropagation();
-    pup.classList.add('bouncing');
-    wagTail();
-
-    setTimeout(() => {
-      pup.classList.remove('bouncing');
-    }, 550);
-
-    setTimeout(stopWag, 1500);
+function movePupils(targetX, targetY) {
+  pupils.forEach((pupil) => {
+    const eye = pupil.parentElement;
+    const center = getEyeCenter(eye);
+    const dx = targetX - center.x;
+    const dy = targetY - center.y;
+    const angle = Math.atan2(dy, dx);
+    const radius = 6; // how far the pupil can move inside the eye
+    const tx = Math.cos(angle) * radius;
+    const ty = Math.sin(angle) * radius;
+    pupil.style.transform = `translate(${tx}px, ${ty}px)`;
   });
+}
+
+document.addEventListener('mousemove', (e) => {
+  if (locked) return;
+  movePupils(e.clientX, e.clientY);
 });
 
-// ---------- Hero puppy: lean, wag, scent lines ----------
-let heroWagFrame = null;
-let scentFrame = null;
+shopBtn.addEventListener('mouseenter', () => {
+  locked = true;
+  const rect = shopBtn.getBoundingClientRect();
+  const targetX = rect.left + rect.width / 2;
+  const targetY = rect.top + rect.height / 2;
+  trackers.forEach((t) => t.classList.add('locked'));
+  movePupils(targetX, targetY);
+});
 
-function startHeroWag() {
-  let angle = 0;
-  let dir = 1;
-  const step = () => {
-    angle += dir * 10;
-    if (angle >= 20 || angle <= -20) dir *= -1;
-    heroTail.setAttribute('transform', `rotate(${angle} 275 110)`);
-    heroWagFrame = requestAnimationFrame(step);
-  };
-  step();
-}
-
-function stopHeroWag() {
-  cancelAnimationFrame(heroWagFrame);
-  heroTail.removeAttribute('transform');
-}
-
-function triggerScentLines() {
-  const lines = document.querySelectorAll('.scent-line');
-  let i = 0;
-  scentFrame = setInterval(() => {
-    lines[i % lines.length].classList.toggle('active');
-    i++;
-  }, 180);
-  setTimeout(() => {
-    clearInterval(scentFrame);
-    lines.forEach((l) => l.classList.remove('active'));
-  }, 1400);
-}
-
-heroPuppy.addEventListener('click', (e) => {
-  e.stopPropagation();
-  heroPuppy.classList.add('wagging');
-  startHeroWag();
-  triggerScentLines();
-  setTimeout(() => {
-    heroPuppy.classList.remove('wagging');
-    stopHeroWag();
-  }, 1400);
+shopBtn.addEventListener('mouseleave', () => {
+  locked = false;
+  trackers.forEach((t) => t.classList.remove('locked'));
 });
 
 // ---------- Celebration popup ----------
 const overlay = document.getElementById('overlay');
 const popup = document.getElementById('popup');
 const closeBtn = document.querySelector('.popup-close');
-const shopButtons = document.querySelectorAll('.btn-shop, #shop-product');
 
 function openPopup() {
   overlay.style.display = 'block';

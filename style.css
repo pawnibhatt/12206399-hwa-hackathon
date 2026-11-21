@@ -98,8 +98,7 @@ img, svg { max-width: 100%; display: block; }
 
 /* Hero */
 .hero { padding: 4rem 0 4rem; background: var(--cream); position: relative; overflow: hidden; }
-.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; }
-.chip {
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; }.chip {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -242,45 +241,141 @@ img, svg { max-width: 100%; display: block; }
   font-size: 1rem;
 }
 
-/* Hero puppy */
-.puppy-hero-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
+/* Hero dogs */
+.hero-dogs {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.dog-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 150px;
 }
-.puppy-hero {
-  width: 100%;
-  filter: drop-shadow(6px 6px 0 rgba(30,41,59,0.25));
-  transition: transform 0.25s;
+.dog-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: var(--stroke) solid var(--ink);
+  box-shadow: var(--shadow);
+  background: var(--white);
+  animation: waggle 3s ease-in-out infinite;
 }
-.puppy-hero.wagging { animation: wagTail 0.5s infinite; }
-@keyframes wagTail {
-  0%, 100% { transform: rotate(0deg) translateX(0); }
-  50% { transform: rotate(12deg) translateX(6px); }
+.dog-img.wagging { animation: waggle 0.15s ease-in-out infinite; }
+.dog-name {
+  font-family: 'Puffy';
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-top: 0.5rem;
+  text-align: center;
 }
-.puppy-label { font-family: 'Puffy'; font-weight: 700; font-size: 1.1rem; color: var(--ink-soft); margin-top: 0.7rem; }
+.dog-eyes {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.eye {
+  position: absolute;
+  top: 42%;
+  width: 22px;
+  height: 22px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+.eye.left { left: 30%; transform: translateX(-50%); }
+.eye.right { right: 30%; transform: translateX(50%); }
+.pupil {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s linear;
+}
+@keyframes waggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
+}
 
-/* Scent lines */
-.scent-line {
-  stroke: #E67E22;
-  stroke-width: 3;
-  fill: none;
-  stroke-linecap: round;
-  opacity: 0;
+/* Product dog trackers */
+.product-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
 }
-.scent-line.active {
-  opacity: 0.95;
-  animation: scentPulse 1.6s ease-in-out infinite;
+.dog-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  max-width: 150px;
 }
-@keyframes scentPulse {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 0.9; transform: scale(1.05); }
-  100% { opacity: 0; transform: scale(0.8); }
+.dog-tracker .dog-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: var(--stroke) solid var(--ink);
+  box-shadow: var(--shadow);
+  background: var(--white);
+  animation: waggle 3s ease-in-out infinite;
+}
+.dog-tracker .dog-eyes {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.dog-tracker .eye {
+  position: absolute;
+  top: 42%;
+  width: 22px;
+  height: 22px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+.dog-tracker .eye.left { left: 30%; transform: translateX(-50%); }
+.dog-tracker .eye.right { right: 30%; transform: translateX(50%); }
+.dog-tracker .pupil {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s linear;
+}
+.dog-tracker.locked .pupil { transition: none; }
+
+/* Remove old SVG puppy & scent lines */
+@media (max-width: 768px) {
+  .hero-dogs { gap: 1rem; }
+  .dog-wrap, .dog-tracker { max-width: 120px; }
+  .dog-wrap .dog-img, .dog-tracker .dog-img { width: 120px; height: 120px; }
+  .dog-eyes, .dog-tracker .dog-eyes { width: 120px; height: 120px; }
+  .product-action { gap: 1.5rem; flex-direction: column; align-items: center; }
+  .product-action .dog-tracker { max-width: 120px; }
 }
 
 /* Sections */
@@ -376,7 +471,6 @@ section { position: relative; z-index: 2; }
 }
 .banner-tag { font-size: 2rem; }
 .product-copy .section-title { margin-bottom: 0.7rem; }
-.product-action { margin-top: 1.4rem; }
 
 /* Footer */
 .site-footer {
@@ -427,6 +521,5 @@ section { position: relative; z-index: 2; }
   .pointer { transform: translate(-50%, -114%); font-size: 1.8rem; }
   .steps-grid { grid-template-columns: 1fr; }
   .love-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .puppy-hero-wrap { max-width: 240px; }
   .product-banner { font-size: 1.1rem; padding: 1.3rem 1rem; }
 }
