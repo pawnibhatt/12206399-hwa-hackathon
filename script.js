@@ -1,22 +1,23 @@
-const wheel = document.getElementById('wheel');
-const innerRing = document.getElementById('inner-ring');
+const box = document.getElementById('box');
+const innerBox = document.getElementById('inner-box');
 const pockets = document.querySelectorAll('.pocket');
 
-// ---------- Rotating inner-ring wheel ----------
-let currentRotation = 0;
+let currentIndex = 0;
 
-function revealTopPocket() {
-  const index = ((Math.round(currentRotation / 60) % 6) + 6) % 6;
+function updateBox() {
   pockets.forEach((p, i) => {
-    p.classList.toggle('revealed', i === index);
+    p.classList.toggle('revealed', i === currentIndex);
   });
+  const offset = 325 - currentIndex * 120;
+  innerBox.style.transform = `translate(-50%, -50%) translateX(${offset}px)`;
 }
 
-wheel.addEventListener('click', () => {
-  currentRotation += 60;
-  innerRing.style.transform = `rotate(${currentRotation}deg)`;
-  revealTopPocket();
+box.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % 6;
+  updateBox();
 });
+
+updateBox();
 
 // ---------- Celebration popup ----------
 const overlay = document.getElementById('overlay');

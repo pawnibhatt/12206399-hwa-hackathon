@@ -157,50 +157,43 @@ img, svg { max-width: 100%; display: block; }
 .love-watermarks { opacity: 0.2; }
 .product-watermarks { opacity: 0.18; }
 
-/* Wheel */
-.wheel-stage { perspective: 700px; display: flex; flex-direction: column; align-items: center; }
-.wheel {
+/* Box */
+.wheel-stage { display: flex; flex-direction: column; align-items: center; }
+.box {
   position: relative;
-  width: min(320px, 85vw);
-  height: min(320px, 85vw);
-  border-radius: 50%;
+  width: min(340px, 90vw);
+  height: 180px;
   border: 6px solid var(--ink);
+  border-radius: 24px;
   background: var(--white);
   box-shadow: var(--shadow), 0 0 0 14px var(--white), 0 0 0 16px var(--coral);
   cursor: pointer;
+  overflow: hidden;
 }
-.outer-ring {
+.outer-box {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 24px;
   border: 4px solid var(--ink);
-  background: conic-gradient(
-    #FFD700 0deg 60deg,
-    #00E5FF 60deg 120deg,
-    #00F260 120deg 180deg,
-    #FF4D6D 180deg 240deg,
-    #FFA500 240deg 300deg,
-    #8A2BE2 300deg 360deg
-  );
-  mask: radial-gradient(circle at center, transparent 74%, black 78%);
-  -webkit-mask: radial-gradient(circle at center, transparent 74%, black 78%);
+  background: linear-gradient(90deg, #FF4D6D 0% 16%, #FFD700 16% 33%, #00E5FF 33% 50%, #00F260 50% 66%, #FF69B4 66% 83%, #8A2BE2 83% 100%);
 }
-.inner-ring {
+.inner-box {
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  transform-style: preserve-3d;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 760px;
+  height: 140px;
+  display: flex;
+  gap: 10px;
   transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .pocket {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 72px; height: 72px;
+  width: 110px; height: 110px;
+  flex-shrink: 0;
   border: 4px solid var(--ink);
-  border-radius: 50%;
-  transform-origin: 50% 50%;
+  border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.9rem;
+  font-size: 2rem;
   z-index: 2;
   opacity: 0.6;
   box-shadow: inset 0 0 0 6px var(--white), var(--shadow);
@@ -219,21 +212,6 @@ img, svg { max-width: 100%; display: block; }
 .pocket.revealed .treat-emoji {
   opacity: 1;
   transform: scale(1.3);
-}
-#pocket-0 { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-#pocket-1 { transform: rotate(60deg) translateX(100px) rotate(-60deg); }
-#pocket-2 { transform: rotate(120deg) translateX(100px) rotate(-120deg); }
-#pocket-3 { transform: rotate(180deg) translateX(100px) rotate(-180deg); }
-#pocket-4 { transform: rotate(240deg) translateX(100px) rotate(-240deg); }
-#pocket-5 { transform: rotate(300deg) translateX(100px) rotate(-300deg); }
-.pointer {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -128%);
-  font-size: 2.6rem;
-  z-index: 5;
-  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.15));
-  user-select: none;
 }
 .wheel-hint {
   margin-top: 1.8rem;
