@@ -2,6 +2,8 @@ const wheel = document.getElementById('wheel');
 const compartments = document.querySelectorAll('.compartment');
 const pointer = document.getElementById('pointer');
 const puppies = document.querySelectorAll('.svg-pup');
+const heroPuppy = document.querySelector('.puppy-hero');
+const heroTail = document.getElementById('hero-tail');
 
 // ---------- Rotating compartment wheel ----------
 let currentRotation = 0;
@@ -9,7 +11,6 @@ let spinning = false;
 
 function revealCompartmentAtTop() {
   const index = ((Math.round(currentRotation / 60) % 6) + 6) % 6;
-
   compartments.forEach((c, i) => {
     c.classList.toggle('revealed', i === index);
   });
@@ -39,8 +40,8 @@ puppies.forEach((pup) => {
     let angle = 0;
     let dir = 1;
     const step = () => {
-      angle += dir * 12;
-      if (angle >= 24 || angle <= -24) dir *= -1;
+      angle += dir * 14;
+      if (angle >= 26 || angle <= -26) dir *= -1;
       tail.setAttribute('transform', `rotate(${angle} 88 44)`);
       wagFrame = requestAnimationFrame(step);
     };
@@ -61,8 +62,53 @@ puppies.forEach((pup) => {
       pup.classList.remove('bouncing');
     }, 550);
 
-    setTimeout(stopWag, 1400);
+    setTimeout(stopWag, 1500);
   });
+});
+
+// ---------- Hero puppy: lean, wag, scent lines ----------
+let heroWagFrame = null;
+let scentFrame = null;
+
+function startHeroWag() {
+  let angle = 0;
+  let dir = 1;
+  const step = () => {
+    angle += dir * 10;
+    if (angle >= 20 || angle <= -20) dir *= -1;
+    heroTail.setAttribute('transform', `rotate(${angle} 275 110)`);
+    heroWagFrame = requestAnimationFrame(step);
+  };
+  step();
+}
+
+function stopHeroWag() {
+  cancelAnimationFrame(heroWagFrame);
+  heroTail.removeAttribute('transform');
+}
+
+function triggerScentLines() {
+  const lines = document.querySelectorAll('.scent-line');
+  let i = 0;
+  scentFrame = setInterval(() => {
+    lines[i % lines.length].classList.toggle('active');
+    i++;
+  }, 180);
+  setTimeout(() => {
+    clearInterval(scentFrame);
+    lines.forEach((l) => l.classList.remove('active'));
+  }, 1400);
+}
+
+heroPuppy.addEventListener('click', (e) => {
+  e.stopPropagation();
+  heroPuppy.classList.add('wagging');
+  startHeroWag();
+  triggerScentLines();
+  setTimeout(() => {
+    heroPuppy.classList.remove('wagging');
+    stopHeroWag();
+  }, 1400);
 });
 
 // ---------- Celebration popup ----------
@@ -75,7 +121,6 @@ function openPopup() {
   overlay.style.display = 'block';
   popup.style.display = 'block';
 }
-
 function closePopup() {
   overlay.style.display = 'none';
   popup.style.display = 'none';
