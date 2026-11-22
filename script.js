@@ -235,5 +235,8 @@ loginClose.addEventListener('click', closeLogin);
 loginOverlay.addEventListener('click', closeLogin);
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  const name = document.getElementById('signup-name').value;
   closeLogin();
+  checkoutMessage.textContent = 'Welcome, ' + name + '! Please add items to your cart and checkout.';
+  checkoutMessage.style.color = '#15803d';
 });

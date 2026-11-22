@@ -647,4 +647,5 @@ section { position: relative; z-index: 2; }
 .checkout-form .order-summary h3 { color: var(--forest) !important; }
 .checkout-form .order-summary .total-line { color: var(--terracotta-dark) !important; }
 .checkout-form .order-summary .free-line { color: var(--green-dark) !important; }
+.checkout-form input, .checkout-form select { color: var(--dark) !important; }
 .form-group input, .form-group select { color: var(--dark); }
