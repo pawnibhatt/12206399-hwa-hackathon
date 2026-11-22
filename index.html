@@ -200,6 +200,10 @@
           <input type="text" id="checkout-address" name="address" required placeholder="123 Bark Lane">
         </div>
         <div class="form-group">
+          <label for="checkout-phone">Phone number</label>
+          <input type="tel" id="checkout-phone" name="phone" required placeholder="+1 555-000-0000">
+        </div>
+        <div class="form-group">
           <label for="checkout-payment">Payment method</label>
           <select id="checkout-payment" name="payment">
             <option value="card">Credit / Debit Card</option>
@@ -233,19 +237,27 @@
   <div class="modal" id="login-modal" role="dialog" aria-modal="true" aria-label="Login">
     <div class="modal-body">
       <button class="modal-close" id="login-close">&times;</button>
-      <h2>Login</h2>
+      <h2>Create Account</h2>
       <form id="login-form">
         <div class="form-group">
-          <label for="login-email">Email</label>
-          <input type="email" id="login-email" required placeholder="alex@example.com">
+          <label for="signup-name">Full name</label>
+          <input type="text" id="signup-name" name="name" required placeholder="Alex">
         </div>
         <div class="form-group">
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" required placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" name="email" required placeholder="alex@example.com">
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        <div class="form-group">
+          <label for="signup-phone">Phone number</label>
+          <input type="tel" id="signup-phone" name="phone" required placeholder="+1 555-000-0000">
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Create password</label>
+          <input type="password" id="signup-password" name="password" required placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
       </form>
-      <p class="modal-footer-text">New to Sniffle? <a href="#" class="modal-link">Create account</a></p>
+      <p class="modal-footer-text">Already have an account? <a href="#" class="modal-link">Log in</a></p>
     </div>
   </div>
 

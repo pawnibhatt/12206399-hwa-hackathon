@@ -166,24 +166,47 @@ overlay.addEventListener('click', (e) => {
   }
 });
 
+const checkoutFormEl = document.getElementById('checkout-form');
+const checkoutFormHTML = checkoutFormEl.innerHTML;
+
 placeOrderBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const name = document.getElementById('checkout-name').value;
   const email = document.getElementById('checkout-email').value;
   const address = document.getElementById('checkout-address').value;
+  const phone = document.getElementById('checkout-phone').value;
   const payment = document.getElementById('checkout-payment').value;
 
-  if (!name || !email || !address) {
+  if (!name || !email || !address || !phone) {
     checkoutMessage.textContent = 'Please fill in all fields.';
     checkoutMessage.style.color = '#b91c1c';
     return;
   }
 
-  const boxTotal = BOX_PRICE * cart.count;
   checkoutMessage.style.color = '#15803d';
-  checkoutMessage.textContent = `Order confirmed! ${cart.count} Sniffle Box${cart.count > 1 ? 'es' : ''} + free 150g treat pack${
-    cart.count > 1 ? 's' : ''
-  } (total $${boxTotal}) paid via ${payment === 'cod' ? 'Cash on Delivery' : payment === 'online' ? 'Online Payment' : 'Card'}. Thank you ${name}!`;
+  checkoutMessage.textContent = 'Booking order..';
+
+  const boxTotal = BOX_PRICE * cart.count;
+  setTimeout(() => {
+    checkoutFormEl.innerHTML = `
+      <div class="confirmation-card">
+        <div class="confirmation-icon">&#10003;</div>
+        <h3 class="confirmation-title">Order Confirmed!</h3>
+        <p class="confirmation-text">${cart.count} Sniffle Box${cart.count > 1 ? 'es' : ''} + free 150g treat pack${
+          cart.count > 1 ? 's' : ''
+        } (total $${boxTotal}) paid via ${payment === 'cod' ? 'Cash on Delivery' : payment === 'online' ? 'Online Payment' : 'Card'}.</p>
+        <p class="confirmation-text">Thank you, ${name}!</p>
+        <button class="btn btn-primary btn-lg" id="continue-shopping">Continue Shopping</button>
+      </div>
+    `;
+    document.getElementById('continue-shopping').addEventListener('click', () => {
+      cart.items = [];
+      updateCartUI();
+      closeCheckout();
+      checkoutFormEl.innerHTML = checkoutFormHTML;
+    });
+  }, 1200);
+
   cart.items = [];
   updateCartUI();
 });
