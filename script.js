@@ -36,6 +36,15 @@ dots.forEach((dot) => {
   });
 });
 
+document.getElementById('slider-prev').addEventListener('click', (e) => {
+  e.stopPropagation();
+  goToSlide(currentSlide - 1);
+});
+document.getElementById('slider-next').addEventListener('click', (e) => {
+  e.stopPropagation();
+  goToSlide(currentSlide + 1);
+});
+
 // ---------- Celebration popup ----------
 const overlay = document.getElementById('overlay');
 const popup = document.getElementById('popup');
