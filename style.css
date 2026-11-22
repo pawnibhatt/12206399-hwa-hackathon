@@ -436,7 +436,7 @@ section { position: relative; z-index: 2; }
   margin-right: auto;
 }
 .banner-tag { font-size: 2rem; }
-.freetreat-img { width: 48px; height: 48px; object-fit: contain; }
+.freetreat-img { width: 200px; height: auto; object-fit: contain; }
 .product-copy .section-title { margin-bottom: 0.7rem; }
 
 /* Footer */
