@@ -169,29 +169,31 @@ overlay.addEventListener('click', (e) => {
 const checkoutFormEl = document.getElementById('checkout-form');
 const checkoutFormHTML = checkoutFormEl.innerHTML;
 
-placeOrderBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('checkout-name').value;
-  const email = document.getElementById('checkout-email').value;
-  const address = document.getElementById('checkout-address').value;
-  const phone = document.getElementById('checkout-phone').value;
-  const payment = document.getElementById('checkout-payment').value;
+function setupPlaceOrder() {
+  placeOrderBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  if (!name || !email || !address || !phone) {
-    checkoutMessage.textContent = 'Please fill in all fields.';
-    checkoutMessage.style.color = '#b91c1c';
-    return;
-  }
+    const name = document.getElementById('checkout-name').value;
+    const email = document.getElementById('checkout-email').value;
+    const address = document.getElementById('checkout-address').value;
+    const phone = document.getElementById('checkout-phone').value;
+    const payment = document.getElementById('checkout-payment').value;
 
-  checkoutMessage.style.color = '#15803d';
-  checkoutMessage.textContent = 'Booking order..';
+    if (!name || !email || !address || !phone) {
+      checkoutMessage.textContent = 'Please fill in all fields.';
+      checkoutMessage.style.color = '#b91c1c';
+      return;
+    }
 
-  const boxTotal = BOX_PRICE * cart.count;
-  setTimeout(() => {
+    checkoutMessage.textContent = '';
+    const boxTotal = BOX_PRICE * cart.count;
+
     checkoutFormEl.innerHTML = `
       <div class="confirmation-card">
         <div class="confirmation-icon">&#10003;</div>
         <h3 class="confirmation-title">Order Confirmed!</h3>
+        <p class="confirmation-text">Your order has been booked.</p>
         <p class="confirmation-text">${cart.count} Sniffle Box${cart.count > 1 ? 'es' : ''} + free 150g treat pack${
           cart.count > 1 ? 's' : ''
         } (total $${boxTotal}) paid via ${payment === 'cod' ? 'Cash on Delivery' : payment === 'online' ? 'Online Payment' : 'Card'}.</p>
@@ -199,17 +201,20 @@ placeOrderBtn.addEventListener('click', (e) => {
         <button class="btn btn-primary btn-lg" id="continue-shopping">Continue Shopping</button>
       </div>
     `;
-    document.getElementById('continue-shopping').addEventListener('click', () => {
+
+    document.getElementById('continue-shopping').addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
       cart.items = [];
       updateCartUI();
       closeCheckout();
       checkoutFormEl.innerHTML = checkoutFormHTML;
+      setupPlaceOrder();
     });
-  }, 1200);
+  });
+}
 
-  cart.items = [];
-  updateCartUI();
-});
+setupPlaceOrder();
 
 // ---------- Login modal ----------
 const loginOverlay = document.getElementById('login-overlay');
@@ -229,10 +234,15 @@ function closeLogin() {
 
 navLogin.addEventListener('click', (e) => {
   e.preventDefault();
+  e.stopPropagation();
   openLogin();
 });
 loginClose.addEventListener('click', closeLogin);
-loginOverlay.addEventListener('click', closeLogin);
+loginOverlay.addEventListener('click', (e) => {
+  if (e.target === loginOverlay) {
+    closeLogin();
+  }
+});
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('signup-name').value;
