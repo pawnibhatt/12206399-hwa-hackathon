@@ -170,7 +170,7 @@ const checkoutFormEl = document.getElementById('checkout-form');
 const checkoutFormHTML = checkoutFormEl.innerHTML;
 
 function setupPlaceOrder() {
-  placeOrderBtn.addEventListener('click', (e) => {
+  placeOrderBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -186,67 +186,52 @@ function setupPlaceOrder() {
       return;
     }
 
-    checkoutMessage.textContent = '';
+    checkoutMessage.textContent = 'Booking order..';
+    checkoutMessage.style.color = '#15803d';
+
     const boxTotal = BOX_PRICE * cart.count;
+    const payload = { name, email, address, phone, payment, quantity: cart.count };
 
-    checkoutFormEl.innerHTML = `
-      <div class="confirmation-card">
-        <div class="confirmation-icon">&#10003;</div>
-        <h3 class="confirmation-title">Order Confirmed!</h3>
-        <p class="confirmation-text">Your order has been booked.</p>
-        <p class="confirmation-text">${cart.count} Sniffle Box${cart.count > 1 ? 'es' : ''} + free 150g treat pack${
-          cart.count > 1 ? 's' : ''
-        } (total $${boxTotal}) paid via ${payment === 'cod' ? 'Cash on Delivery' : payment === 'online' ? 'Online Payment' : 'Card'}.</p>
-        <p class="confirmation-text">Thank you, ${name}!</p>
-        <button class="btn btn-primary btn-lg" id="continue-shopping">Continue Shopping</button>
-      </div>
-    `;
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
 
-    document.getElementById('continue-shopping').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-      cart.items = [];
-      updateCartUI();
-      closeCheckout();
-      checkoutFormEl.innerHTML = checkoutFormHTML;
-      setupPlaceOrder();
-    });
+      if (res.ok && result.ok) {
+        checkoutFormEl.innerHTML = `
+          <div class="confirmation-card">
+            <div class="confirmation-icon">&#10003;</div>
+            <h3 class="confirmation-title">Order Confirmed!</h3>
+            <p class="confirmation-text">Your order has been booked.</p>
+            <p class="confirmation-text">Order ID: <strong>${result.orderId}</strong></p>
+            <p class="confirmation-text">${cart.count} Sniffle Box${cart.count > 1 ? 'es' : ''} + free 150g treat pack (total $${boxTotal}) paid via ${payment === 'cod' ? 'Cash on Delivery' : payment === 'online' ? 'Online Payment' : 'Card'}.</p>
+            <button class="btn btn-primary btn-lg" id="continue-shopping">Continue Shopping</button>
+          </div>
+        `;
+        document.getElementById('continue-shopping').addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          cart.items = [];
+          updateCartUI();
+          closeCheckout();
+          checkoutFormEl.innerHTML = checkoutFormHTML;
+          setupPlaceOrder();
+        });
+      } else {
+        checkoutMessage.textContent = result.error || 'Order failed. Try again.';
+        checkoutMessage.style.color = '#b91c1c';
+      }
+    } catch (err) {
+      checkoutMessage.textContent = 'Unable to reach the server. Try again later.';
+      checkoutMessage.style.color = '#b91c1c';
+    }
+
+    cart.items = [];
+    updateCartUI();
   });
 }
 
 setupPlaceOrder();
-
-// ---------- Login modal ----------
-const loginOverlay = document.getElementById('login-overlay');
-const loginModal = document.getElementById('login-modal');
-const loginClose = document.getElementById('login-close');
-const loginForm = document.getElementById('login-form');
-const navLogin = document.querySelector('.nav-login');
-
-function openLogin() {
-  loginOverlay.style.display = 'block';
-  loginModal.style.display = 'block';
-}
-function closeLogin() {
-  loginOverlay.style.display = 'none';
-  loginModal.style.display = 'none';
-}
-
-navLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  openLogin();
-});
-loginClose.addEventListener('click', closeLogin);
-loginOverlay.addEventListener('click', (e) => {
-  if (e.target === loginOverlay) {
-    closeLogin();
-  }
-});
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('signup-name').value;
-  closeLogin();
-  checkoutMessage.textContent = 'Welcome, ' + name + '! Please add items to your cart and checkout.';
-  checkoutMessage.style.color = '#15803d';
-});
