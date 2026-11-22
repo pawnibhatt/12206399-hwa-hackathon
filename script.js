@@ -143,6 +143,27 @@ checkoutBtn.addEventListener('click', (e) => {
   e.preventDefault();
   closeCart();
   updateCheckoutSummary();
+  openCheckout();
+});
+
+const checkoutPanel = document.getElementById('checkout-panel');
+const checkoutClose = document.getElementById('checkout-close');
+
+function openCheckout() {
+  overlay.style.display = 'block';
+  checkoutPanel.style.display = 'flex';
+}
+function closeCheckout() {
+  overlay.style.display = 'none';
+  checkoutPanel.style.display = 'none';
+}
+
+checkoutClose.addEventListener('click', closeCheckout);
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    closeCart();
+    closeCheckout();
+  }
 });
 
 placeOrderBtn.addEventListener('click', (e) => {
