@@ -12,19 +12,44 @@
 <body>
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
-      <a href="#" class="brand" aria-label="Sniffle home">
-        <img class="brand-img" src="images/logo.png" alt="Sniffle logo" loading="lazy" decoding="async">
-        <span class="brand-text">Sniffle</span>
-      </a>
+      <div class="nav-left">
+        <a href="#" class="brand" aria-label="Sniffle home">
+          <img class="brand-img" src="images/logo.png" alt="Sniffle logo" loading="lazy" decoding="async">
+          <span class="brand-text">Sniffle</span>
+        </a>
+        <a href="#login" class="nav-login">Login</a>
+      </div>
       <ul class="nav-links">
         <li><a href="#how-it-works">How it works</a></li>
         <li><a href="#love-it">Why owners love it</a></li>
-        <li><a href="#product">Product</a></li>
+        <li><a href="#shop">Shop it</a></li>
       </ul>
-      <a href="#product" class="btn-shop nav-shop">Shop now</a>
+      <div class="nav-cart" id="nav-cart">
+        <span class="cart-icon">&#128722;</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
     </div>
   </nav>
+
+  <!-- Cart drawer -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="cart-close" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span class="cart-total-amount" id="cart-total-amount">$0</span>
+      </div>
+      <button class="btn btn-primary btn-lg" id="checkout-btn" disabled>Checkout</button>
+    </div>
+  </div>
 
   <section class="hero" id="hero">
     <div class="watermarks">
@@ -39,7 +64,7 @@
         <span class="chip">New!</span>
         <h1>Keep your dog happily busy<br>while you&rsquo;re away.</h1>
         <p class="lead">Sniffle is the rotating treat-puzzle box that turns alone time into playtime. Sniff, spin, snack, repeat!</p>
-        <a href="#product" class="btn btn-primary btn-lg">Shop now</a>
+        <a href="#shop" class="btn btn-primary btn-lg">Shop now</a>
       </div>
       <div class="hero-visual">
         <div class="slider-wrapper">
@@ -59,6 +84,33 @@
           </div>
           <button class="slider-arrow slider-arrow-next" id="slider-next">&#10095;</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product" id="product">
+    <div class="container product-inner">
+      <div class="product-banner">
+        <span class="banner-tag">&#127881;</span>
+        <strong>FREE 150g Treat Pack included with every Sniffle Box!</strong>
+      </div>
+      <img class="free-treat-banner" src="images/150gfree.png" alt="Free 150g treat pack" loading="lazy" decoding="async">
+      <div class="product-details">
+        <div class="product-price">
+          <span class="price-label">Price:</span>
+          <span class="price-value">$20</span>
+        </div>
+        <div class="product-qty">
+          <label for="product-quantity">Quantity:</label>
+          <select id="product-quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-lg" id="add-to-cart">Add to cart</button>
       </div>
     </div>
   </section>
@@ -118,33 +170,72 @@
     </div>
   </section>
 
-  <section class="product" id="product">
-    <div class="watermarks product-watermarks">
-      <div class="mark bone"></div>
-      <div class="mark paw"></div>
-      <div class="mark bone"></div>
-    </div>
-    <div class="container product-inner">
-      <div class="product-banner">
-        <span class="banner-tag">&#127881;</span>
-        <strong>FREE 150g Treat Pack included with every Sniffle Box!</strong>
-      </div>
-      <img class="free-treat-banner" src="images/150gfree.png" alt="Free 150g treat pack" loading="lazy" decoding="async">
-      <div class="product-copy">
-        <h2 class="section-title">Meet the Sniffle Box</h2>
-        <p class="lead">Six rotating compartments, endless snack spins. Bright, chunky, and built for happy paws.</p>
-      </div>
-      <div class="product-action">
-        <div class="dog-tracker left">
-          <img class="dog-img" src="images/taylor-kopel-WX4i1Jq_o0Y-unsplash.jpg" alt="Happy dog" loading="lazy" decoding="async">
+  <section class="shop" id="shop">
+    <div class="container shop-inner">
+      <h2 class="section-title">Checkout</h2>
+      <p class="lead">Complete your order. Free 150g of treats added automatically with every Sniffle Box.</p>
+      <div class="checkout-form">
+        <div class="form-group">
+          <label for="checkout-name">Your name</label>
+          <input type="text" id="checkout-name" name="name" required placeholder="Alex">
         </div>
-        <button class="btn btn-primary btn-lg btn-shop-product" id="shop-product">Shop now</button>
-        <div class="dog-tracker right">
-          <img class="dog-img" src="images/victor-g-N04FIfHhv_k-unsplash.jpg" alt="Happy dog" loading="lazy" decoding="async">
+        <div class="form-group">
+          <label for="checkout-email">Email</label>
+          <input type="email" id="checkout-email" name="email" required placeholder="alex@example.com">
         </div>
+        <div class="form-group">
+          <label for="checkout-address">Shipping address</label>
+          <input type="text" id="checkout-address" name="address" required placeholder="123 Bark Lane">
+        </div>
+        <div class="form-group">
+          <label for="checkout-payment">Payment method</label>
+          <select id="checkout-payment" name="payment">
+            <option value="card">Credit / Debit Card</option>
+            <option value="cod">Cash on Delivery</option>
+            <option value="online">Online Payment</option>
+          </select>
+        </div>
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div class="order-line">
+            <span>Sniffle Box &times; <span id="checkout-qty">1</span></span>
+            <span id="checkout-box-price">$20</span>
+          </div>
+          <div class="order-line free-line">
+            <span>Free 150g Treat Pack</span>
+            <span>$0</span>
+          </div>
+          <div class="order-line total-line">
+            <span>Total</span>
+            <span id="checkout-total">$20</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" id="place-order">Place Order</button>
       </div>
+      <div id="checkout-message" role="status" aria-live="polite"></div>
     </div>
   </section>
+
+  <!-- Login modal -->
+  <div class="overlay" id="login-overlay" aria-hidden="true"></div>
+  <div class="modal" id="login-modal" role="dialog" aria-modal="true" aria-label="Login">
+    <div class="modal-body">
+      <button class="modal-close" id="login-close">&times;</button>
+      <h2>Login</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required placeholder="alex@example.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+      </form>
+      <p class="modal-footer-text">New to Sniffle? <a href="#" class="modal-link">Create account</a></p>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -155,17 +246,6 @@
       <p class="footer-note">Thank you for being a part of the Sniffle Pack!</p>
     </div>
   </footer>
-
-  <!-- Celebration popup -->
-  <div class="overlay" id="overlay" aria-hidden="true"></div>
-  <div class="popup" id="popup" role="dialog" aria-modal="true" aria-label="Coming Soon">
-    <div class="popup-body">
-      <div class="popup-icon">&#127881;</div>
-      <h2 class="popup-title">Coming Soon!</h2>
-      <p class="popup-text">The Sniffle shop is warming up. We can&rsquo;t wait to ship your pup a box!</p>
-      <button class="btn btn-secondary popup-close">Got it</button>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
