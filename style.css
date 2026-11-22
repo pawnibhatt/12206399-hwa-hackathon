@@ -173,7 +173,7 @@ img, svg { max-width: 100%; display: block; }
   border: 8px solid var(--ink);
   border-radius: 28px;
   background: var(--white);
-  box-shadow: var(--shadow), 0 0 0 18px var(--white), 0 0 0 22px var(--coral);
+  box-shadow: var(--shadow), 0 0 0 18px var(--white);
   overflow: hidden;
   cursor: grab;
   flex-shrink: 0;
